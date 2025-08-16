@@ -161,72 +161,86 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchBtn = document.getElementById("searchBtn");
   const locationSelect = document.getElementById("locationSelect");
-  const categorySelect = document.getElementById("categorySelect");
   const eventTypeSelect = document.getElementById("eventType");
+  const modeSelect = document.getElementById("ModeSelect");
   const headerSearch = document.querySelector(".search");
   const categoryButtons = document.querySelectorAll(".categories button");
   const eventCards = document.querySelectorAll(".event-card");
-  const eventsSection = document.querySelector(".events");
+  const eventsSection = document.querySelector(".event-grid");
 
-  function showNoEventsMessage() {
-    eventsSection.innerHTML = `
-      <div style="text-align:center; padding: 2rem;">
-        <h2 style="color:#000; font-weight:700;">Featured Events</h2>
-        <p style="color:#666;">Don't miss these popular events happening near you</p>
-        <p style="color:red; margin-top:1rem;">Failed to load events. Please try again.</p>
-        <button id="retryBtn" style="margin-top:1rem; background:#149631; color:white; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Retry</button>
-      </div>
-    `;
-
-    document.getElementById("retryBtn").addEventListener("click", () => {
-      eventsSection.innerHTML = ""; // Clears message — could reload events later
-    });
-  }
-
-  // New function to filter events by category button click
-  function filterByCategory(category) {
+  function filterEvents(searchText = "") {
     let foundAny = false;
 
     eventCards.forEach(card => {
-      const tags = card.querySelectorAll(".tags span");
-      const hasCategory = Array.from(tags).some(
-        tag => tag.textContent.trim().toLowerCase() === category.toLowerCase()
-      );
+      const title = card.querySelector("h3").textContent.toLowerCase();
+      const meta = card.querySelector(".meta").textContent.toLowerCase();
+      const tags = Array.from(card.querySelectorAll(".tags span")).map(t => t.textContent.toLowerCase());
 
-      if (category === "all" || hasCategory) {
-        card.style.display = "";
-        if (hasCategory || category === "all") foundAny = true;
-      } else {
-        card.style.display = "none";
-      }
+      const locationValue = locationSelect.value.toLowerCase();
+      const typeValue = eventTypeSelect.value.toLowerCase();
+      const modeValue = modeSelect.value.toLowerCase();
+      const searchLower = searchText.toLowerCase();
+
+      const matches =
+        (!locationValue || meta.includes(locationValue)) &&
+        (!typeValue || tags.includes(typeValue)) &&
+        (!modeValue || tags.includes(modeValue)) &&
+        (!searchLower || title.includes(searchLower));
+
+      card.style.display = matches ? "" : "none";
+      if (matches) foundAny = true;
     });
 
     if (!foundAny) {
-      eventsSection.innerHTML = `
-        <div style="text-align:center; padding: 2rem;">
-          <p style="color:red; font-weight:600;">No events to display</p>
-        </div>
-      `;
+      eventsSection.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">No events match your search.</p>`;
     }
   }
 
-  // When search button clicked
-  searchBtn.addEventListener("click", showNoEventsMessage);
-
-  // When header search input used
-  headerSearch.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") showNoEventsMessage();
+  // Search button click
+  searchBtn.addEventListener("click", () => {
+    // reset grid before filtering
+    eventsSection.innerHTML = "";
+    eventCards.forEach(card => eventsSection.appendChild(card));
+    filterEvents(headerSearch.value);
   });
 
-  // When category clicked → use filter instead of error
-  categoryButtons.forEach((btn) => {
+  // Press enter in header search input
+  headerSearch.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      eventsSection.innerHTML = "";
+      eventCards.forEach(card => eventsSection.appendChild(card));
+      filterEvents(headerSearch.value);
+    }
+  });
+
+  // Category buttons
+  categoryButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-      const categoryName = btn.textContent.trim();
-      filterByCategory(categoryName);
+      const category = btn.textContent.trim().toLowerCase();
+      eventsSection.innerHTML = "";
+      eventCards.forEach(card => eventsSection.appendChild(card));
+      if (category === "all") {
+        eventCards.forEach(card => card.style.display = "");
+        return;
+      }
+      let foundAny = false;
+      eventCards.forEach(card => {
+        const tags = Array.from(card.querySelectorAll(".tags span")).map(t => t.textContent.toLowerCase());
+        if (tags.includes(category)) {
+          card.style.display = "";
+          foundAny = true;
+        } else {
+          card.style.display = "none";
+        }
+      });
+      if (!foundAny) {
+        eventsSection.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">No events in this category.</p>`;
+      }
     });
   });
 });
 </script>
+
 
 
 

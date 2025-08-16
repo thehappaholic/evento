@@ -31,3 +31,9 @@ const userAuth = async (req, res, next) => {
 };
 
 export default userAuth;
+// middleware/userAuth.js
+export const requireAuth = (req, res, next) => {
+    // your auth middleware code
+    next();
+};
+

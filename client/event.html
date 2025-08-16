@@ -1,61 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Event Info | Evento</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  .event-cover { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; }
-  .event-info { max-width: 900px; margin: 2rem auto; }
-  .tags span { background: #eee; padding: 5px 10px; margin-right: 5px; border-radius: 5px; font-size: 0.85rem; }
-  .section { margin-bottom: 1.5rem; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evento – Event Details</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="event-info">
-  <img src="images/techconference.jpg" alt="Event Flyer" class="event-cover">
+<!-- Fixed Header with Event Title + Actions -->
+<header class="event-header">
+  <h1 id="eventTitle">Tech Conference 2025</h1>
+  <div class="event-actions">
+    <button class="icon-btn">🔗 Share</button>
+    <button class="icon-btn">⭐ Bookmark</button>
+    <button class="icon-btn">❤️ Like</button>
+  </div>
+</header>
 
-  <h1>Tech Conference 2025</h1>
-  <div class="tags"><span>Tech</span><span>Online</span></div>
+<!-- Event Flyer -->
+<section class="event-flyer">
+  <img src="images/techconference.jpg" alt="Event Flyer" id="flyerImg">
+  <div class="event-tags">
+    <span class="tag category">Tech</span>
+    <span class="tag mode">Online</span>
+    <span class="tag ticket">Free</span>
+  </div>
+</section>
 
-  <div class="section">
-    <p><strong>Date:</strong> Aug 21, 2025</p>
-    <p><strong>Time:</strong> 10:00 AM</p>
-    <p><strong>Venue:</strong> Nuwaraeliya</p>
-    <p><strong>Mode:</strong> Free</p>
+<!-- Event Details -->
+<section class="event-details">
+  <div class="details-grid">
+    <div class="detail-item"><span>📅</span> Aug 21, 2025</div>
+    <div class="detail-item"><span>⏰</span> 10:00 AM</div>
+    <div class="detail-item"><span>🕒</span> 2 hrs</div>
+    <div class="detail-item"><span>🔞</span> 18+</div>
+    <div class="detail-item"><span>💻</span> Online</div>
+    <div class="detail-item"><span>📍</span> <a href="https://www.google.com/maps?q=Nuwaraeliya" target="_blank">Nuwaraeliya</a></div>
   </div>
 
-  <div class="section">
-    <h3>Description</h3>
-    <p>Explore future technologies with top speakers and innovators.</p>
+  <h2>About the Event</h2>
+  <p>Explore future technologies with top speakers and innovators.</p>
+
+  <h2>About the Event Organizer</h2>
+  <p><a href="host-profile.html">Tech Events Ltd</a> – Leading organizer in tech conferences globally.</p>
+
+  <h2>Ticket Info</h2>
+  <p>Price: Free</p>
+  <p>Materials: Yes – Provided on-site</p>
+  <p>Food/Beverages: No</p>
+</section>
+
+<!-- Booking Steps -->
+<section class="booking-steps">
+  <div class="progress-bar">
+    <div class="step-progress" id="progress"></div>
   </div>
 
-  <div class="section">
-    <h3>Requirements</h3>
+  <!-- Step 1: Select Date & Time -->
+  <div class="step active" id="step1">
+    <h3>Step 1: Select Date & Time</h3>
+    <div class="venue-info">Venue: Nuwaraeliya</div>
+    <div class="step-inputs">
+      <label>Select Date:
+        <input type="radio" name="date" value="Aug 21, 2025"> Aug 21
+        <input type="radio" name="date" value="Aug 22, 2025"> Aug 22
+      </label>
+      <label>Select Time:
+        <input type="radio" name="time" value="10:00 AM"> 10:00 AM
+        <input type="radio" name="time" value="02:00 PM"> 02:00 PM
+      </label>
+    </div>
+    <button class="btn next-step">Next</button>
+  </div>
+
+  <!-- Step 2: Ticket Selection -->
+  <div class="step" id="step2">
+    <h3>Step 2: Ticket Selection</h3>
+    <p>Maximum 3 tickets per user</p>
+    <div class="ticket-grid">
+      <div class="ticket-card">
+        <span>General Admission</span>
+        <span>Free</span>
+        <button class="add-ticket">Add</button>
+      </div>
+      <div class="ticket-card">
+        <span>VIP</span>
+        <span>$50</span>
+        <button class="add-ticket">Add</button>
+      </div>
+    </div>
+    <div class="ticket-summary">
+      <p>Tickets Selected: <span id="ticketCount">0</span></p>
+      <p>Subtotal: $<span id="subtotal">0</span></p>
+    </div>
+    <button class="btn prev-step">Back</button>
+    <button class="btn next-step">Next</button>
+  </div>
+
+  <!-- Step 3: Review & Confirm -->
+  <div class="step" id="step3">
+    <h3>Step 3: Review & Confirm</h3>
+    <p>E-Ticket Information:</p>
     <ul>
-      <li><strong>Age:</strong> 18 to All ages</li>
-      <li><strong>Languages:</strong> English, Sinhala</li>
-      <li><strong>Materials:</strong> Yes – Provided on-site</li>
-      <li><strong>Food/Beverages:</strong> No</li>
+      <li>Access tickets from “My Events” or email.</li>
+      <li>Mandatory to present e-ticket at the venue.</li>
+      <li>No physical tickets required.</li>
     </ul>
+    <div class="booking-summary">
+      <p>Date: <span id="reviewDate"></span></p>
+      <p>Time: <span id="reviewTime"></span></p>
+      <p>Tickets: <span id="reviewTickets"></span></p>
+      <p>Subtotal: $<span id="reviewSubtotal"></span></p>
+    </div>
+    <button class="btn prev-step">Back</button>
+    <button class="btn proceed">Proceed to Payment</button>
   </div>
+</section>
 
-  <div class="section">
-    <h3>Purpose</h3>
-    <p>Community Engagement - Connecting tech enthusiasts and innovators.</p>
-  </div>
-
-  <div class="section">
-    <button class="btn">Book Now</button>
-  </div>
-</div>
-
-<script>
-  // TODO: Fetch event details from backend using event ID in URL
-  // Example: ?id=123 → fetch(`/api/events/123`).then(...)
-</script>
-
+<script src="event.js"></script>
 </body>
 </html>
