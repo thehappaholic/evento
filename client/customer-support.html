@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Support | Evento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'League Spartan', sans-serif;
+      background: #f7fdf4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1rem;
+      color: #1a1a1a;
+    }
+
+    .chat-wrapper {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      height: 90vh;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: #e1f8cd;
+      padding: 1rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #149631;
+      border-bottom: 1px solid #d6eec0;
+    }
+
+    .chat-window {
+      flex: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 0.75rem;
+      max-width: 75%;
+      border-radius: 18px;
+      font-size: 1rem;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .message.bot {
+      background-color: #eefbe9;
+      border: 1px solid #d8f5ce;
+      align-self: flex-start;
+    }
+
+    .message.user {
+      background-color: #149631;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid #eaeaea;
+      background-color: #fff;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .chat-input button {
+      margin-left: 0.75rem;
+      background-color: #149631;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      background-color: #107826;
+    }
+
+    @media (max-width: 600px) {
+      .chat-wrapper {
+        height: 95vh;
+        max-width: 100%;
+      }
+
+      .chat-input input {
+        padding: 0.6rem 0.8rem;
+      }
+
+      .chat-input button {
+        padding: 0.6rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-wrapper">
+    <div class="chat-header">
+      👋 Hello! How can we help you?
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+      <div class="message bot">Welcome to Evento Support! Feel free to ask us anything.</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (message === "") return;
+
+      const chatWindow = document.getElementById("chatWindow");
+
+      // Add user message
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.innerText = message;
+      chatWindow.appendChild(userMsg);
+
+      // Scroll to bottom
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+
+      // Simulated bot reply
+      setTimeout(() => {
+        const botMsg = document.createElement("div");
+        botMsg.className = "message bot";
+        botMsg.innerText = "Thanks! A support agent will be with you shortly.";
+        chatWindow.appendChild(botMsg);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, 600);
+
+      input.value = "";
+    }
+
+    document.getElementById("userInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+
+</body>
+</html>

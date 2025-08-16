@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Password | Evento</title>
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <br>
+  <div class="login-container">
+    <img src="images/eventologo.png" alt="Evento Logo" class="login-logo" />
+    <br><br>
+
+    <div class="login-box">
+      <h1>Set New Password</h1>
+      <p class="login-sub">Enter the OTP sent to your email and create a new password.</p>
+
+      <form id="resetForm">
+        <input type="text" id="otp" placeholder="Enter OTP" required />
+        <input type="password" id="newPassword" placeholder="New Password" required />
+        <button type="submit" class="btn login-submit">Reset Password</button>
+      </form>
+
+      <br>
+      <p class="login-sub">Back to <a href="login.html"><strong>Login</strong></a></p>
+    </div>
+  </div>
+
+  <script src="resetotp.js"></script>
+</body>
+</html>

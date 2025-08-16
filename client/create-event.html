@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Event | Evento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .step { display: none; }
+    .step.active { display: block; }
+    .step-box-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .step-box-grid .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .step-box-grid .form-group textarea {
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="max-width: 900px; margin: 2rem auto;">
+
+    <!-- STEP 1: Select Tier -->
+    <div class="step active" id="step1">
+      <div class="step-box">
+        <h2 class="section-title">Choose Event Tier</h2>
+        <div class="event-grid" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+            <h3>🎨 Creator</h3>
+            <p>In-person events by individuals for limited participants.</p>
+            <button class="btn" onclick="setTier('creator')">Select</button>
+          </div>
+          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+            <h3>💻 Virtual Host</h3>
+            <p>Online events by individuals for the public.</p>
+            <button class="btn" onclick="setTier('virtual')">Select</button>
+          </div>
+          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+            <h3>🌱 Community Host</h3>
+            <p>Offline events by NGOs or communities. <strong>Host login required</strong></p>
+            <button class="btn" onclick="requireHost('community')">Select</button>
+          </div>
+          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+            <h3>🏢 Enterprise Host</h3>
+            <p>Private/recurring events by businesses or clubs. <strong>Host login required</strong></p>
+            <button class="btn" onclick="requireHost('enterprise')">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Event Details -->
+    <div class="step" id="step2">
+      <div class="step-box step-box-grid">
+        <h2 class="section-title" style="grid-column: span 2;">Event Details</h2>
+
+        <div class="form-group"><label>Title</label><input type="text" /></div>
+<div class="form-group">
+  <label id="label-url-flyer">Upload Event Flyer</label>
+  
+    <div id="drop-area">
+    <p>Drag & drop an image here or <span class="browse-btn">browse</span></p>
+    <input type="file" id="eventFlyer" accept="image/*" hidden />
+    <img id="flyerPreview" style="display: none;" />
+  </div>
+  
+  <div class="custom-file-upload">
+    <input type="file" id="urlOrFlyer" accept="image/*" />
+    <span>Choose Image</span>
+  </div>
+
+  <img id="flyerPreview" style="display:none; max-width: 100%; margin-top: 10px; border-radius: 8px;" />
+</div>
+
+        <div class="form-group" style="grid-column: span 2;"><label>Description</label><textarea rows="3"></textarea></div>
+
+        <div class="form-group"><label>Type</label>
+          <select><option>Workshop</option><option>Webinar</option><option>Meetup</option></select>
+        </div>
+        <div class="form-group"><label>Date</label><input type="date" /></div>
+        <div class="form-group"><label>Time</label><input type="time" /></div>
+        <div class="form-group"><label id="label-venue">Venue</label><input type="text" id="venueOrUrl" /></div>
+        <div class="form-group"><label>Location</label><input type="text" /></div>
+        <div class="form-group"><label>Duration (hrs)</label><input type="number" /></div>
+        <div class="form-group"><label>Max Participants</label><input type="number" /></div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Mode</label>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+           <label><input type="radio" name="mode" value="free" checked /> Free</label>
+           <label><input type="radio" name="mode" value="paid" /> Paid</label>
+           <label><input type="radio" name="mode" value="rsvp" /> RSVP</label>
+          </div>
+        </div>
+
+        <div class="form-group" id="ticketPriceGroup" style="grid-column: span 2;"><label>Ticket Price</label><input type="number" /></div>
+
+        <div style="grid-column: span 2; display: flex; justify-content: space-between;">
+          <button class="btn btn-outline" onclick="goToStep(1)">Back</button>
+          <button class="btn btn-outline" onclick="goToStep(3)">Next</button>
+        </div>
+      </div>
+    </div>
+
+<!-- STEP 3: Requirements -->
+    <div class="step" id="step3">
+      <div class="step-box">
+        <h2 class="section-title">Event Requirements</h2>
+        <div class="form-group">
+          <label>Age Category</label>
+          <select><option>15</option><option>18</option><option>21+</option></select>
+          to
+          <select><option>30</option><option>40</option><option>All ages</option></select>
+        </div>
+        <div class="form-group">
+          <label>Languages</label>
+          <label><input type="checkbox" /> Tamil</label>
+          <label><input type="checkbox" /> Sinhala</label>
+          <label><input type="checkbox" /> English</label>
+        </div>
+        <div class="form-group">
+          <label>Materials Provided?</label>
+          <label><input type="radio" name="materials" onclick="toggleBox('materialsBox', true)" /> Yes</label>
+          <label><input type="radio" name="materials" onclick="toggleBox('materialsBox', false)" /> No</label>
+          <textarea id="materialsBox" style="display:none;"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Food/Beverages Provided?</label>
+          <label><input type="radio" name="food" onclick="toggleBox('foodBox', true)" /> Yes</label>
+          <label><input type="radio" name="food" onclick="toggleBox('foodBox', false)" /> No</label>
+          <textarea id="foodBox" style="display:none;"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Rules/Regulations?</label>
+          <label><input type="radio" name="rules" onclick="toggleBox('rulesBox', true)" /> Yes</label>
+          <label><input type="radio" name="rules" onclick="toggleBox('rulesBox', false)" /> No</label>
+          <textarea id="rulesBox" style="display:none;"></textarea>
+        </div>
+        <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
+        <button class="btn btn-outline" onclick="goToStep(4)">Next</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Survey -->
+    <div class="step" id="step4">
+      <div class="step-box">
+        <h2 class="section-title">Why are you creating this event?</h2>
+        <div class="form-group">
+          <label>Purpose</label>
+          <select>
+            <option>Community Engagement</option>
+            <option>Education / Training</option>
+            <option>Lead Generation</option>
+            <option>Business Promotion</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Additional Info</label><textarea></textarea></div>
+        <button class="btn btn-outline" onclick="goToStep(3)">Back</button>
+        <button class="btn btn-outline" onclick="goToStep(5)">Next</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Payment Policy Agreement -->
+    <div class="step" id="step5">
+      <div class="step-box">
+        <h2 class="section-title">Payment Agreement</h2>
+        <div class="policy-agreement">
+          <p>If this is a paid event, you must agree to our policy before publishing.</p>
+          <label><input type="checkbox" id="acceptPolicy" /> I accept the payment policy terms</label>
+        </div>
+        <button class="btn login-submit" onclick="submitForm()">Create Event</button>
+        <button class="btn btn-outline" onclick="goToStep(4)">Back</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let currentStep = 1;
+    let selectedTier = '';
+
+    function goToStep(step) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+      currentStep = step;
+    }
+
+    function setTier(tier) {
+      selectedTier = tier;
+      if (tier === 'virtual') {
+        document.getElementById('label-url-flyer').innerText = 'Event URL';
+        document.getElementById('label-venue').innerText = '—';
+      } else {
+        document.getElementById('label-url-flyer').innerText = 'Flyer URL';
+        document.getElementById('label-venue').innerText = 'Venue';
+      }
+      goToStep(2);
+    }
+
+    function requireHost(tier) {
+      alert("This tier requires a Host login. Redirecting...");
+      window.location.href = "eologin.html";
+    }
+
+    function submitForm() {
+      const isPaid = document.querySelector("input[name='mode'][value='paid']")?.checked;
+      const accepted = document.getElementById("acceptPolicy")?.checked;
+      if (isPaid && !accepted) {
+        alert("Please accept the payment policy to proceed.");
+        return;
+      }
+      alert("🎉 Event Created Successfully!");
+      // TODO: Submit data to backend
+    }
+  </script>
+</body>
+</html>

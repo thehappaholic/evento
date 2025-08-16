@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evento – Get the happening!</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="images/evento-logo.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><img src="images/eventologo.png" alt="Evento Logo"></div>
+    <input class="search" type="text" placeholder="     Search events..." img="images/search.png" />
+    <a href="login.html" class="btn login-btn">Login</a>
+  </header>
+
+  <section class="hero">
+    <h1>Get to know<br><span>what's happening around you?</span></h1>
+
+    <div class="search-container">
+
+      <select id="locationSelect">
+       <option value="all">All Locations</option>
+       <option value="Colombo">Colombo</option>
+       <option value="Jaffna">Jaffna</option>
+       <option value="Anuradhapura">Anuradhapura</option>
+       <option value="Vavuniya">Vavuniya</option>
+     </select>
+
+     <select id="eventType">
+       <option value="all">All Event Types</option>
+       <option value="standup comedy">standup comedy</option>
+       <option value="seminar">seminar</option>
+       <option value="workshop">Workshop</option>
+       <option value="virtual events">virtual events</option>
+     </select>
+  
+     <select id="ModeSelect">
+       <option value="all">All Event modes</option>
+       <option value="music">In-person</option>
+       <option value="sports">online</option>
+       <option value="tech">free</option>
+      
+     </select>
+
+
+     <button id="searchBtn">
+       <span class="icon">&#128269;</span> Search
+     </button>
+     </div>
+<br>
+    <p class="subtext">Evento is your personal event buddy, helping you discover and join the best happenings around you - all on one interactive event map.</p>
+    <a href="register.html" class="btn get-started-btn">Get Started</a>
+  </section>
+
+<div class="categories-scroll-container"> 
+<section class="categories">
+  <button class="btn-outline">
+  <img src="images/art.png" alt="Art" style="width:18px; height:18px; margin-right:6px;"><b>Art</b></button>
+  <button class="btn-outline">
+  <img src="images/up.png" alt="Business" style="width:18px; height:18px; margin-right:6px;"><b>Business</b></button>
+  <button class="btn-outline">
+  <img src="images/mask.png" alt="Entertainment" style="width:18px; height:18px; margin-right:6px;"><b>Entertainment</b></button>
+  <button class="btn-outline">
+  <img src="images/restaurant.png" alt="Food" style="width:18px; height:18px; margin-right:6px;"><b>Food</b></button>
+  <button class="btn-outline">
+  <img src="images/health-care.png" alt="Health" style="width:18px; height:18px; margin-right:6px;"><b>Health</b></button>
+  <button class="btn-outline">
+  <img src="images/balls.png" alt="Sports" style="width:18px; height:18px; margin-right:6px;"><b>Sports</b></button>
+  <button class="btn-outline">
+  <img src="images/social.png" alt="Tech" style="width:18px; height:18px; margin-right:6px;"><b>Tech</b></button>
+  <button class="btn-outline">
+  <img src="images/hiking.png" alt="Travel" style="width:18px; height:18px; margin-right:6px;"><b>Travel</b></button>
+
+</section>
+</div>
+
+  <section class="events">
+    <!-- sample event cards -->
+    <div class="event-grid">
+      <div class="event-card" onclick="window.location.href='event.html'">
+        <img src="images/techconference.jpg" alt="Event Image" />
+        <h3>Tech Conference 2025</h3>
+        <p class="meta">📅 Aug 21 | 📍 Nuwaraeliya</p>
+        <p class="desc">Explore future technologies with top speakers and innovators.</p>
+        <div class="tags"><span>Tech</span><span>Online</span></div>
+      </div>
+
+      <div class="event-card">
+        <img src="images/startuppitch.jpg" alt="Event Image" />
+        <h3>Startup Pitch Night</h3>
+        <p class="meta">📅 Sep 10 | 📍 Jaffna</p>
+        <p class="desc">Join aspiring founders as they pitch their ideas to investors and mentors.</p>
+        <div class="tags"><span>Business</span><span>In-Person</span></div>
+      </div>
+  
+      <div class="event-card">
+        <img src="images/artexpo.jpg" alt="Event Image" />
+        <h3>Art & Design Expo</h3>
+        <p class="meta">📅 Oct 5 | 📍 Kandy</p>
+        <p class="desc">A vibrant exhibition of modern art, design concepts, and installations.</p>
+        <div class="tags"><span>Art</span><span>Exhibition</span><span>Free</span></div>
+      </div>
+  
+      <div class="event-card">
+        <img src="images/standupcomedy.jpg" alt="Event Image" />
+        <h3>Standup Comedy Show</h3>
+        <p class="meta">📅 Nov 15 | 📍 Colombo</p>
+        <p class="desc">Laugh out loud with top comedians delivering non-stop jokes and fun.</p>
+        <div class="tags"><span>Entertainment</span><span>In-Person</span></div>
+      </div>
+  
+      <div class="event-card">
+        <img src="images/foodfestival.jpg" alt="Event Image" />
+        <h3>Food Festival 2025</h3>
+        <p class="meta">📅 Dec 10 | 📍 Anuradhapura</p>
+        <p class="desc">Savor the flavors from top chefs and food trucks.</p>
+        <div class="tags"><span>Food</span><span>Festival</span></div>
+      </div>
+</div>
+
+  </section>
+
+  <footer class="footer">
+  <div class="footer-top">
+    <div class="footer-left">
+      <img src="images/eventologo.png" alt="Evento Logo" class="footer-logo">
+      <p>Evento is your personalized event buddy -
+      <br> discover, host, and enjoy the best happenings around you!</p>
+    </div>
+
+    <div class="footer-center">
+      <h4>Quick Links</h4>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Customer Support</a>
+      <a href="#">About Us</a>
+    </div>
+
+    <div class="footer-right">
+      <h4>Join our community</h4>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+        </form>
+        <p class="newsletter-note">
+          Never miss out on the latest happenings!<br>
+          No spam - just exciting updates straight to your inbox.
+        </p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© Evento 2025. All rights reserved.</p>
+  </div>
+</footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const searchBtn = document.getElementById("searchBtn");
+  const locationSelect = document.getElementById("locationSelect");
+  const categorySelect = document.getElementById("categorySelect");
+  const eventTypeSelect = document.getElementById("eventType");
+  const headerSearch = document.querySelector(".search");
+  const categoryButtons = document.querySelectorAll(".categories button");
+  const eventCards = document.querySelectorAll(".event-card");
+  const eventsSection = document.querySelector(".events");
+
+  function showNoEventsMessage() {
+    eventsSection.innerHTML = `
+      <div style="text-align:center; padding: 2rem;">
+        <h2 style="color:#000; font-weight:700;">Featured Events</h2>
+        <p style="color:#666;">Don't miss these popular events happening near you</p>
+        <p style="color:red; margin-top:1rem;">Failed to load events. Please try again.</p>
+        <button id="retryBtn" style="margin-top:1rem; background:#149631; color:white; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Retry</button>
+      </div>
+    `;
+
+    document.getElementById("retryBtn").addEventListener("click", () => {
+      eventsSection.innerHTML = ""; // Clears message — could reload events later
+    });
+  }
+
+  // New function to filter events by category button click
+  function filterByCategory(category) {
+    let foundAny = false;
+
+    eventCards.forEach(card => {
+      const tags = card.querySelectorAll(".tags span");
+      const hasCategory = Array.from(tags).some(
+        tag => tag.textContent.trim().toLowerCase() === category.toLowerCase()
+      );
+
+      if (category === "all" || hasCategory) {
+        card.style.display = "";
+        if (hasCategory || category === "all") foundAny = true;
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    if (!foundAny) {
+      eventsSection.innerHTML = `
+        <div style="text-align:center; padding: 2rem;">
+          <p style="color:red; font-weight:600;">No events to display</p>
+        </div>
+      `;
+    }
+  }
+
+  // When search button clicked
+  searchBtn.addEventListener("click", showNoEventsMessage);
+
+  // When header search input used
+  headerSearch.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") showNoEventsMessage();
+  });
+
+  // When category clicked → use filter instead of error
+  categoryButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const categoryName = btn.textContent.trim();
+      filterByCategory(categoryName);
+    });
+  });
+});
+</script>
+
+
+
+</body>
+</html>

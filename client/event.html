@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Event Info | Evento</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  .event-cover { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; }
+  .event-info { max-width: 900px; margin: 2rem auto; }
+  .tags span { background: #eee; padding: 5px 10px; margin-right: 5px; border-radius: 5px; font-size: 0.85rem; }
+  .section { margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<div class="event-info">
+  <img src="images/techconference.jpg" alt="Event Flyer" class="event-cover">
+
+  <h1>Tech Conference 2025</h1>
+  <div class="tags"><span>Tech</span><span>Online</span></div>
+
+  <div class="section">
+    <p><strong>Date:</strong> Aug 21, 2025</p>
+    <p><strong>Time:</strong> 10:00 AM</p>
+    <p><strong>Venue:</strong> Nuwaraeliya</p>
+    <p><strong>Mode:</strong> Free</p>
+  </div>
+
+  <div class="section">
+    <h3>Description</h3>
+    <p>Explore future technologies with top speakers and innovators.</p>
+  </div>
+
+  <div class="section">
+    <h3>Requirements</h3>
+    <ul>
+      <li><strong>Age:</strong> 18 to All ages</li>
+      <li><strong>Languages:</strong> English, Sinhala</li>
+      <li><strong>Materials:</strong> Yes – Provided on-site</li>
+      <li><strong>Food/Beverages:</strong> No</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>Purpose</h3>
+    <p>Community Engagement - Connecting tech enthusiasts and innovators.</p>
+  </div>
+
+  <div class="section">
+    <button class="btn">Book Now</button>
+  </div>
+</div>
+
+<script>
+  // TODO: Fetch event details from backend using event ID in URL
+  // Example: ?id=123 → fetch(`/api/events/123`).then(...)
+</script>
+
+</body>
+</html>

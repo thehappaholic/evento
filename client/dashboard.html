@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | Evento</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="dashboard-wrapper">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <img src="images/evento-logo.svg" alt="Evento Logo" class="sidebar-logo" />
+      <div class="nav-icons">
+        <br>
+        <br>
+        <a href="dashboard.html" title="Home">
+          <img src="images/home.png" alt="Home" />
+        </a>
+        <br>
+        <a href="events.html" title="Discover">
+          <img src="images/compass.png" alt="Discover" />
+        </a>
+        <br>
+        <a href="create-event.html" title="Create Event">
+          <img src="images/plus.png" alt="Create" />
+        </a>
+        <br>
+        <a href="notifications.html" title="Notifications">
+          <img src="images/notification-bell.png" alt="Notifications" />
+        </a>
+        <br>
+        <a href="customer-support.html" title="customer-support">
+          <img src="images/customer-support.png" alt="Profile" />
+        </a>
+        <br>
+      </div>
+    </aside>
+
+    <!-- Main Dashboard Area -->
+    <main class="dashboard">
+
+      <!-- Topbar -->
+      <header class="dashboard-header">
+        <input type="text" class="search-bar" placeholder="Search events..." />
+        <a href="profile.html" title="Profile">
+          <img src="images/user.png" alt="User Icon" class="profile-icon" />
+        </a>
+      </header>
+
+      <!-- Welcome + Tabs -->
+      <section class="welcome">
+        <h1>Hello <span id="userName">Explorer</span> 👋</h1>
+        <div class="tabs">
+          <button class="tab active">Popular</button>
+          <button class="tab">For You</button>
+        </div>
+      </section>
+
+      <!-- Main Content Grid -->
+      <section class="event-grid">
+        <!-- Sample Event Cards -->
+        <div class="event-card">
+          <img src="https://via.placeholder.com/300x160" alt="Event Image" />
+          <h3>Startup Meetup</h3>
+          <p class="meta">📍 Bengaluru | 🗓️ Aug 25</p>
+          <p class="desc">Meet fellow builders and investors under one roof.</p>
+          <div class="tags">
+            <span>Networking</span>
+            <span>Offline</span>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <img src="https://via.placeholder.com/300x160" alt="Event Image" />
+          <h3>AI & Design</h3>
+          <p class="meta">📍 Online | 🗓️ Sep 10</p>
+          <p class="desc">A hands-on workshop exploring the synergy of AI + UX.</p>
+          <div class="tags">
+            <span>Workshop</span>
+            <span>Online</span>
+          </div>
+        </div>
+
+        <!-- More cards can be appended via JS -->
+      </section>
+    </main>
+
+    <!-- Right Panel: Event Status -->
+    <aside class="event-status">
+      <h4>EVENT STATUS</h4>
+      <div class="status-card">
+        <span>Music Fest</span><span class="status green"></span>
+      </div>
+      <div class="status-card">
+        <span>UI Bootcamp</span><span class="status purple"></span>
+      </div>
+      <div class="status-card">
+        <span>Startup Demo</span><span class="status gray"></span>
+      </div>
+      <div class="status-card">
+        <span>Health Talk</span><span class="status green"></span>
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    // Dynamic greeting from localStorage/session or future API
+    const name = localStorage.getItem('userName') || 'Explorer';
+    document.getElementById('userName').textContent = name;
+  </script>
+</body>
+</html>
