@@ -10,32 +10,25 @@
 <body>
   <div class="dashboard-wrapper">
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation (Desktop) -->
     <aside class="sidebar">
       <img src="images/evento-logo.svg" alt="Evento Logo" class="sidebar-logo" />
       <div class="nav-icons">
-        <br>
-        <br>
         <a href="dashboard.html" title="Home">
           <img src="images/home.png" alt="Home" />
         </a>
-        <br>
-        <a href="events.html" title="Discover">
+        <a href="explore.html" title="Discover">
           <img src="images/compass.png" alt="Discover" />
         </a>
-        <br>
         <a href="create-event.html" title="Create Event">
           <img src="images/plus.png" alt="Create" />
         </a>
-        <br>
         <a href="notifications.html" title="Notifications">
           <img src="images/notification-bell.png" alt="Notifications" />
         </a>
-        <br>
-        <a href="customer-support.html" title="customer-support">
-          <img src="images/customer-support.png" alt="Profile" />
+        <a href="customer-support.html" title="Support">
+          <img src="images/customer-support.png" alt="Support" />
         </a>
-        <br>
       </div>
     </aside>
 
@@ -58,6 +51,17 @@
           <button class="tab">For You</button>
         </div>
       </section>
+
+      <section>
+  <h2>My Bookings</h2>
+  <div id="myBookings"></div>
+</section>
+
+<section>
+  <h2>My Hosted Events</h2>
+  <div id="myHosted"></div>
+</section>
+
 
       <!-- Main Content Grid -->
       <section class="event-grid">
@@ -87,30 +91,65 @@
         <!-- More cards can be appended via JS -->
       </section>
     </main>
-
-    <!-- Right Panel: Event Status -->
-    <aside class="event-status">
-      <h4>EVENT STATUS</h4>
-      <div class="status-card">
-        <span>Music Fest</span><span class="status green"></span>
-      </div>
-      <div class="status-card">
-        <span>UI Bootcamp</span><span class="status purple"></span>
-      </div>
-      <div class="status-card">
-        <span>Startup Demo</span><span class="status gray"></span>
-      </div>
-      <div class="status-card">
-        <span>Health Talk</span><span class="status green"></span>
-      </div>
-    </aside>
-
   </div>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="dashboard.html" title="Home">
+      <img src="images/home.png" alt="Home" />
+    </a>
+    <a href="explore.html" title="Discover">
+      <img src="images/compass.png" alt="Discover" />
+    </a>
+    <a href="create-event.html" title="Create Event" class="create-btn">
+      <img src="images/plus.png" alt="Create" />
+    </a>
+    <a href="notifications.html" title="Notifications">
+      <img src="images/notification-bell.png" alt="Notifications" />
+    </a>
+    <a href="customer-support.html" title="Support">
+      <img src="images/customer-support.png" alt="Support" />
+    </a>
+  </nav>
 
   <script>
     // Dynamic greeting from localStorage/session or future API
     const name = localStorage.getItem('userName') || 'Explorer';
     document.getElementById('userName').textContent = name;
   </script>
+
+  <script type="module">
+  import { apiGet } from './js/api.js';
+
+  (async function(){
+    // My bookings
+    try{
+      const my = await apiGet('/api/bookings/my');
+      if(my.success){
+        const box = document.querySelector('#myBookings');
+        box.innerHTML = (my.data||[]).map(b => `
+          <div class="booking-row">
+            <a href="event.html?id=${b.event?._id}">${b.event?.title || 'Event'}</a>
+            <div>${new Date(b.createdAt).toLocaleString()}</div>
+          </div>`).join('') || '<p>No bookings yet</p>';
+      }
+    }catch(e){}
+
+    // Hosted by me (option A: server supports ?hostedBy=me)
+    try{
+      const evs = await apiGet('/api/events?hostedBy=me');
+      if(evs.success){
+        const box = document.querySelector('#myHosted');
+        box.innerHTML = (evs.data||[]).map(ev=>`
+          <div class="event-row">
+            <a href="event.html?id=${ev._id}">${ev.title}</a>
+            <span>${new Date(ev.date).toLocaleDateString()}</span>
+          </div>
+        `).join('') || '<p>No events hosted yet</p>';
+      }
+    }catch(e){}
+  })();
+</script>
+
 </body>
 </html>

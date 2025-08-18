@@ -4,52 +4,164 @@
   <meta charset="UTF-8" />
   <title>Create Event | Evento</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset + Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'League Spartan', sans-serif;
+      background:#ffff;
+      color: #222;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    h2.section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: #149631;
+    }
+    .step-box {
+      background: #e1f8cd;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+
+    /* Step management */
     .step { display: none; }
     .step.active { display: block; }
+
+    /* Tier cards */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .tier-card {
+      background: #fdfdfd;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      transition: 0.2s ease;
+    }
+    .tier-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+    .tier-card h3 {
+      margin-bottom: 0.5rem;
+      color:#149631;
+    }
+
+    /* Form grid */
     .step-box-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
-    .step-box-grid .form-group {
+    .form-group {
       display: flex;
       flex-direction: column;
     }
-    .step-box-grid .form-group textarea {
-      resize: vertical;
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    textarea { resize: vertical; }
+
+    /* Buttons */
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+      border: none;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-outline {
+      border: 1px solid #fff;
+      background: #149631;
+      color: #fff;
+    }
+    .btn-outline:hover { background: #fff; color: #fff; }
+    .login-submit {
+      background: #fff;
+      color: #fff;
+    }
+
+    /* Policy agreement */
+    .policy-agreement {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .step-box-grid {
+        grid-template-columns: 1fr;
+      }
+      .step-box {
+        padding: 1rem;
+      }
+      h2.section-title {
+        font-size: 1.3rem;
+      }
+      .btn, .btn-outline {
+        flex: 1;
+        margin: 0.3rem;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container" style="max-width: 900px; margin: 2rem auto;">
+  <div class="container">
 
     <!-- STEP 1: Select Tier -->
     <div class="step active" id="step1">
       <div class="step-box">
         <h2 class="section-title">Choose Event Tier</h2>
-        <div class="event-grid" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
-          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+        <div class="event-grid">
+          <div class="tier-card">
             <h3>🎨 Creator</h3>
-            <p>In-person events by individuals for limited participants.</p>
-            <button class="btn" onclick="setTier('creator')">Select</button>
+            <p>In-person events for limited participants.</p>
+            <button class="btn btn-outline" onclick="setTier('creator')">Select</button>
           </div>
-          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+          <div class="tier-card">
             <h3>💻 Virtual Host</h3>
-            <p>Online events by individuals for the public.</p>
-            <button class="btn" onclick="setTier('virtual')">Select</button>
+            <p>Online events for the public.</p>
+            <button class="btn btn-outline" onclick="setTier('virtual')">Select</button>
           </div>
-          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+          <div class="tier-card">
             <h3>🌱 Community Host</h3>
-            <p>Offline events by NGOs or communities. <strong>Host login required</strong></p>
-            <button class="btn" onclick="requireHost('community')">Select</button>
+            <p>Offline NGO/community events.<br><strong>Host login required</strong></p>
+            <button class="btn btn-outline" onclick="requireHost('community')">Select</button>
           </div>
-          <div class="tier-card" style="flex: 1 1 calc(25% - 1rem); min-width: 200px;">
+          <div class="tier-card">
             <h3>🏢 Enterprise Host</h3>
-            <p>Private/recurring events by businesses or clubs. <strong>Host login required</strong></p>
-            <button class="btn" onclick="requireHost('enterprise')">Select</button>
+            <p>Recurring business/club events.<br><strong>Host login required</strong></p>
+            <button class="btn btn-outline" onclick="requireHost('enterprise')">Select</button>
           </div>
         </div>
       </div>
@@ -59,91 +171,42 @@
     <div class="step" id="step2">
       <div class="step-box step-box-grid">
         <h2 class="section-title" style="grid-column: span 2;">Event Details</h2>
-
-        <div class="form-group"><label>Title</label><input type="text" /></div>
-<div class="form-group">
-  <label id="label-url-flyer">Upload Event Flyer</label>
-  
-    <div id="drop-area">
-    <p>Drag & drop an image here or <span class="browse-btn">browse</span></p>
-    <input type="file" id="eventFlyer" accept="image/*" hidden />
-    <img id="flyerPreview" style="display: none;" />
-  </div>
-  
-  <div class="custom-file-upload">
-    <input type="file" id="urlOrFlyer" accept="image/*" />
-    <span>Choose Image</span>
-  </div>
-
-  <img id="flyerPreview" style="display:none; max-width: 100%; margin-top: 10px; border-radius: 8px;" />
-</div>
-
-        <div class="form-group" style="grid-column: span 2;"><label>Description</label><textarea rows="3"></textarea></div>
-
+        <div class="form-group"><label>Title</label><input type="text" id="title" /></div>
+        <div class="form-group" style="grid-column: span 2;"><label>Description</label><textarea id="description" rows="3"></textarea></div>
         <div class="form-group"><label>Type</label>
-          <select><option>Workshop</option><option>Webinar</option><option>Meetup</option></select>
+          <select id="type"><option>Workshop</option><option>Webinar</option><option>Meetup</option></select>
         </div>
-        <div class="form-group"><label>Date</label><input type="date" /></div>
-        <div class="form-group"><label>Time</label><input type="time" /></div>
+        <div class="form-group"><label>Date</label><input type="date" id="date" /></div>
+        <div class="form-group"><label>Time</label><input type="time" id="time" /></div>
         <div class="form-group"><label id="label-venue">Venue</label><input type="text" id="venueOrUrl" /></div>
-        <div class="form-group"><label>Location</label><input type="text" /></div>
-        <div class="form-group"><label>Duration (hrs)</label><input type="number" /></div>
-        <div class="form-group"><label>Max Participants</label><input type="number" /></div>
-
+        <div class="form-group"><label>Location</label><input type="text" id="location" /></div>
+        <div class="form-group"><label>Duration (hrs)</label><input type="number" id="duration" /></div>
+        <div class="form-group"><label>Max Participants</label><input type="number" id="maxParticipants" /></div>
         <div class="form-group" style="grid-column: span 2;">
           <label>Mode</label>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-           <label><input type="radio" name="mode" value="free" checked /> Free</label>
-           <label><input type="radio" name="mode" value="paid" /> Paid</label>
-           <label><input type="radio" name="mode" value="rsvp" /> RSVP</label>
-          </div>
+          <label><input type="radio" name="mode" value="free" checked /> Free</label>
+          <label><input type="radio" name="mode" value="paid" /> Paid</label>
+          <label><input type="radio" name="mode" value="rsvp" /> RSVP</label>
         </div>
-
-        <div class="form-group" id="ticketPriceGroup" style="grid-column: span 2;"><label>Ticket Price</label><input type="number" /></div>
-
-        <div style="grid-column: span 2; display: flex; justify-content: space-between;">
+        <div class="form-group" id="ticketPriceGroup" style="grid-column: span 2;">
+          <label>Ticket Price</label><input type="number" id="ticketPrice" />
+        </div>
+        <div style="grid-column: span 2; display: flex; justify-content: space-between; flex-wrap: wrap;">
           <button class="btn btn-outline" onclick="goToStep(1)">Back</button>
-          <button class="btn btn-outline" onclick="goToStep(3)">Next</button>
+          <button class="btn login-submit" onclick="goToStep(3)">Next</button>
         </div>
       </div>
     </div>
 
-<!-- STEP 3: Requirements -->
+    <!-- STEP 3: Requirements -->
     <div class="step" id="step3">
       <div class="step-box">
         <h2 class="section-title">Event Requirements</h2>
-        <div class="form-group">
-          <label>Age Category</label>
-          <select><option>15</option><option>18</option><option>21+</option></select>
-          to
-          <select><option>30</option><option>40</option><option>All ages</option></select>
+        <div class="form-group"><label>Rules/Regulations?</label><textarea id="rules"></textarea></div>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+          <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
+          <button class="btn login-submit" onclick="goToStep(4)">Next</button>
         </div>
-        <div class="form-group">
-          <label>Languages</label>
-          <label><input type="checkbox" /> Tamil</label>
-          <label><input type="checkbox" /> Sinhala</label>
-          <label><input type="checkbox" /> English</label>
-        </div>
-        <div class="form-group">
-          <label>Materials Provided?</label>
-          <label><input type="radio" name="materials" onclick="toggleBox('materialsBox', true)" /> Yes</label>
-          <label><input type="radio" name="materials" onclick="toggleBox('materialsBox', false)" /> No</label>
-          <textarea id="materialsBox" style="display:none;"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Food/Beverages Provided?</label>
-          <label><input type="radio" name="food" onclick="toggleBox('foodBox', true)" /> Yes</label>
-          <label><input type="radio" name="food" onclick="toggleBox('foodBox', false)" /> No</label>
-          <textarea id="foodBox" style="display:none;"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Rules/Regulations?</label>
-          <label><input type="radio" name="rules" onclick="toggleBox('rulesBox', true)" /> Yes</label>
-          <label><input type="radio" name="rules" onclick="toggleBox('rulesBox', false)" /> No</label>
-          <textarea id="rulesBox" style="display:none;"></textarea>
-        </div>
-        <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
-        <button class="btn btn-outline" onclick="goToStep(4)">Next</button>
       </div>
     </div>
 
@@ -151,18 +214,19 @@
     <div class="step" id="step4">
       <div class="step-box">
         <h2 class="section-title">Why are you creating this event?</h2>
-        <div class="form-group">
-          <label>Purpose</label>
-          <select>
+        <div class="form-group"><label>Purpose</label>
+          <select id="purpose">
             <option>Community Engagement</option>
             <option>Education / Training</option>
             <option>Lead Generation</option>
             <option>Business Promotion</option>
           </select>
         </div>
-        <div class="form-group"><label>Additional Info</label><textarea></textarea></div>
-        <button class="btn btn-outline" onclick="goToStep(3)">Back</button>
-        <button class="btn btn-outline" onclick="goToStep(5)">Next</button>
+        <div class="form-group"><label>Additional Info</label><textarea id="extraInfo"></textarea></div>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+          <button class="btn btn-outline" onclick="goToStep(3)">Back</button>
+          <button class="btn login-submit" onclick="goToStep(5)">Next</button>
+        </div>
       </div>
     </div>
 
@@ -174,10 +238,11 @@
           <p>If this is a paid event, you must agree to our policy before publishing.</p>
           <label><input type="checkbox" id="acceptPolicy" /> I accept the payment policy terms</label>
         </div>
-        <button class="btn login-submit" onclick="submitForm()">Create Event</button>
-        <button class="btn btn-outline" onclick="goToStep(4)">Back</button>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <button class="btn login-submit" onclick="submitForm()">Create Event</button>
+          <button class="btn btn-outline" onclick="goToStep(4)">Back</button>
+        </div>
       </div>
-
     </div>
 
   </div>
@@ -194,13 +259,6 @@
 
     function setTier(tier) {
       selectedTier = tier;
-      if (tier === 'virtual') {
-        document.getElementById('label-url-flyer').innerText = 'Event URL';
-        document.getElementById('label-venue').innerText = '—';
-      } else {
-        document.getElementById('label-url-flyer').innerText = 'Flyer URL';
-        document.getElementById('label-venue').innerText = 'Venue';
-      }
       goToStep(2);
     }
 
@@ -209,15 +267,53 @@
       window.location.href = "eologin.html";
     }
 
-    function submitForm() {
-      const isPaid = document.querySelector("input[name='mode'][value='paid']")?.checked;
-      const accepted = document.getElementById("acceptPolicy")?.checked;
+    async function submitForm() {
+      const isPaid = document.querySelector("input[name='mode'][value='paid']").checked;
+      const accepted = document.getElementById("acceptPolicy").checked;
       if (isPaid && !accepted) {
         alert("Please accept the payment policy to proceed.");
         return;
       }
-      alert("🎉 Event Created Successfully!");
-      // TODO: Submit data to backend
+
+      const eventData = {
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        type: document.getElementById("type").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        venue: document.getElementById("venueOrUrl").value,
+        location: document.getElementById("location").value,
+        duration: document.getElementById("duration").value,
+        maxParticipants: document.getElementById("maxParticipants").value,
+        mode: document.querySelector("input[name='mode']:checked").value,
+        ticketPrice: document.getElementById("ticketPrice").value || 0,
+        tier: selectedTier,
+        rules: document.getElementById("rules").value,
+        purpose: document.getElementById("purpose").value,
+        extraInfo: document.getElementById("extraInfo").value,
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/api/events", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify(eventData)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert("🎉 Event Created Successfully!");
+          window.location.href = "dashboard.html";
+        } else {
+          alert("❌ Error: " + data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Check console.");
+      }
     }
   </script>
 </body>

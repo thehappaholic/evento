@@ -1,124 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Evento – Event Details</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evento — Event Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* --- Minimal inline styles for new components (keep your style.css as primary) --- */
+    :root {
+      --brand:#0f62fe;
+      --ink:#222;
+      --muted:#6b7280;
+      --bg:#f7f7f8;
+      --card:#fff;
+      --ring:#e5e7eb;
+      --success:#16a34a;
+      --danger:#ef4444;
+    }
+    body{font-family:'League Spartan',system-ui,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+    /* Header */
+    .event-header{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .event-header h1{font-size:1.35rem;margin:0}
+    .event-actions{display:flex;gap:10px;align-items:center}
+    .icon-btn{width:28px;height:28px;cursor:pointer;filter:grayscale(.2);opacity:.9;transition:transform .15s ease,opacity .15s ease}
+    .icon-btn:hover{transform:scale(1.05);opacity:1}
+
+    /* Flyer & Tags */
+    .wrap{max-width:1024px;margin:0 auto;padding:16px}
+    .event-flyer{display:grid;gap:12px;justify-items:center}
+    .event-flyer img{width:min(100%,780px);border-radius:14px}
+    .event-tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:#eef2ff;color:#3730a3;padding:4px 10px;border-radius:999px;font-weight:600;font-size:.85rem}
+
+    /* Meta list */
+    .event-meta{display:flex;flex-wrap:wrap;gap:14px;list-style:none;padding:0;margin:14px 0;justify-content:center}
+    .event-meta li{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--ring);padding:8px 12px;border-radius:999px}
+    .event-meta img{width:18px;height:18px}
+
+    /* Details card */
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px}
+    .stack{display:grid;gap:12px}
+
+    /* Booking */
+    .booking-steps{margin-top:18px}
+    .step{display:none}
+    .step.active{display:block}
+    .progress-bar{height:8px;background:#eef2ff;border-radius:999px;overflow:hidden;margin-bottom:12px}
+    .step-progress{height:100%;width:0;background:var(--brand)}
+    .h3{font-size:1.1rem;margin:0 0 8px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{background:var(--brand);border:none;color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:#e5e7eb;color:#111}
+    .btn.ghost{background:transparent;border:1px solid var(--ring);color:#111}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+
+    /* Tickets */
+    .ticket-grid{display:grid;gap:10px}
+    .ticket-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;border:1px solid var(--ring);background:var(--card);border-radius:14px;padding:10px 12px}
+    .ticket-add{justify-self:start}
+    .ticket-type{font-weight:700}
+    .ticket-price{color:var(--muted);font-weight:600}
+    .qty{display:flex;align-items:center;gap:8px}
+    .qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--ring);background:#fff;cursor:pointer}
+    .summary{display:grid;gap:4px;background:#f3f4f6;border:1px dashed var(--ring);padding:10px;border-radius:12px}
+
+    /* Terms */
+    .accordion{border:1px solid var(--ring);border-radius:12px;overflow:hidden}
+    .accordion button{width:100%;text-align:left;background:#fafafa;border:none;padding:12px 14px;font-weight:700;cursor:pointer}
+    .accordion .content{display:none;padding:12px 14px;background:#fff;border-top:1px solid var(--ring)}
+
+    .policy{text-align:center;margin:14px 0 4px;font-weight:700;color:#374151}
+
+    /* Notice */
+    .notice{border:1px solid #bfdbfe;background:#eff6ff;padding:12px;border-radius:12px}
+
+    /* RSVP form */
+    .form{display:grid;gap:10px}
+    .field{display:grid;gap:6px}
+    .field input,.field select,.field textarea{border:1px solid var(--ring);border-radius:10px;padding:10px}
+    .helper{color:var(--muted);font-size:.9rem}
+
+    /* Dialog (simple) */
+    .dialog{border:1px solid var(--ring);background:#fff;border-radius:14px;padding:14px}
+  </style>
 </head>
 <body>
-
-<!-- Fixed Header with Event Title + Actions -->
-<header class="event-header">
-  <h1 id="eventTitle">Tech Conference 2025</h1>
-  <div class="event-actions">
-    <button class="icon-btn">🔗 Share</button>
-    <button class="icon-btn">⭐ Bookmark</button>
-    <button class="icon-btn">❤️ Like</button>
-  </div>
-</header>
-
-<!-- Event Flyer -->
-<section class="event-flyer">
-  <img src="images/techconference.jpg" alt="Event Flyer" id="flyerImg">
-  <div class="event-tags">
-    <span class="tag category">Tech</span>
-    <span class="tag mode">Online</span>
-    <span class="tag ticket">Free</span>
-  </div>
-</section>
-
-<!-- Event Details -->
-<section class="event-details">
-  <div class="details-grid">
-    <div class="detail-item"><span>📅</span> Aug 21, 2025</div>
-    <div class="detail-item"><span>⏰</span> 10:00 AM</div>
-    <div class="detail-item"><span>🕒</span> 2 hrs</div>
-    <div class="detail-item"><span>🔞</span> 18+</div>
-    <div class="detail-item"><span>💻</span> Online</div>
-    <div class="detail-item"><span>📍</span> <a href="https://www.google.com/maps?q=Nuwaraeliya" target="_blank">Nuwaraeliya</a></div>
-  </div>
-
-  <h2>About the Event</h2>
-  <p>Explore future technologies with top speakers and innovators.</p>
-
-  <h2>About the Event Organizer</h2>
-  <p><a href="host-profile.html">Tech Events Ltd</a> – Leading organizer in tech conferences globally.</p>
-
-  <h2>Ticket Info</h2>
-  <p>Price: Free</p>
-  <p>Materials: Yes – Provided on-site</p>
-  <p>Food/Beverages: No</p>
-</section>
-
-<!-- Booking Steps -->
-<section class="booking-steps">
-  <div class="progress-bar">
-    <div class="step-progress" id="progress"></div>
-  </div>
-
-  <!-- Step 1: Select Date & Time -->
-  <div class="step active" id="step1">
-    <h3>Step 1: Select Date & Time</h3>
-    <div class="venue-info">Venue: Nuwaraeliya</div>
-    <div class="step-inputs">
-      <label>Select Date:
-        <input type="radio" name="date" value="Aug 21, 2025"> Aug 21
-        <input type="radio" name="date" value="Aug 22, 2025"> Aug 22
-      </label>
-      <label>Select Time:
-        <input type="radio" name="time" value="10:00 AM"> 10:00 AM
-        <input type="radio" name="time" value="02:00 PM"> 02:00 PM
-      </label>
+  <!-- Header -->
+  <header class="event-header">
+    <h1 id="eventTitle">Tech Conference 2025</h1>
+    <div class="event-actions">
+      <img src="images/share.png" alt="Share" class="icon-btn" title="Share">
+    <img src="images/bookmark.png" alt="Bookmark" class="icon-btn" title="Bookmark">
+    <img src="images/heart.png" alt="Like" class="icon-btn" title="Like">
     </div>
-    <button class="btn next-step">Next</button>
-  </div>
+  </header>
 
-  <!-- Step 2: Ticket Selection -->
-  <div class="step" id="step2">
-    <h3>Step 2: Ticket Selection</h3>
-    <p>Maximum 3 tickets per user</p>
-    <div class="ticket-grid">
-      <div class="ticket-card">
-        <span>General Admission</span>
-        <span>Free</span>
-        <button class="add-ticket">Add</button>
+  <main class="wrap">
+    <!-- Flyer -->
+    <section class="event-flyer">
+      <img src="images/techconference.jpg" alt="Event Flyer" id="flyerImg" />
+      <div class="event-tags">
+        <span class="tag" id="tagCategory">Tech</span>
+        <span class="tag" id="tagMode">Online</span>
+        <span class="tag" id="tagTicket">Paid</span>
       </div>
-      <div class="ticket-card">
-        <span>VIP</span>
-        <span>$50</span>
-        <button class="add-ticket">Add</button>
-      </div>
-    </div>
-    <div class="ticket-summary">
-      <p>Tickets Selected: <span id="ticketCount">0</span></p>
-      <p>Subtotal: $<span id="subtotal">0</span></p>
-    </div>
-    <button class="btn prev-step">Back</button>
-    <button class="btn next-step">Next</button>
-  </div>
+    </section>
 
-  <!-- Step 3: Review & Confirm -->
-  <div class="step" id="step3">
-    <h3>Step 3: Review & Confirm</h3>
-    <p>E-Ticket Information:</p>
-    <ul>
-      <li>Access tickets from “My Events” or email.</li>
-      <li>Mandatory to present e-ticket at the venue.</li>
-      <li>No physical tickets required.</li>
+    <!-- Meta list (with exact venue) -->
+    <ul class="event-meta" id="metaList">
+      <!-- Populated from CONFIG below -->
     </ul>
-    <div class="booking-summary">
-      <p>Date: <span id="reviewDate"></span></p>
-      <p>Time: <span id="reviewTime"></span></p>
-      <p>Tickets: <span id="reviewTickets"></span></p>
-      <p>Subtotal: $<span id="reviewSubtotal"></span></p>
-    </div>
-    <button class="btn prev-step">Back</button>
-    <button class="btn proceed">Proceed to Payment</button>
-  </div>
-</section>
 
-<script src="event.js"></script>
+    <!-- About / Organizer -->
+    <section class="card stack">
+      <div>
+        <h2 class="h3">About the Event</h2>
+        <p id="aboutText">Explore future technologies with top speakers and innovators.</p>
+      </div>
+      <div>
+        <h2 class="h3">About the Organizer</h2>
+        <p><a href="host-profile.html" id="organizerLink">Tech Events Ltd</a> — Leading organizer in tech conferences globally.</p>
+      </div>
+      <div>
+        <h2 class="h3">Ticket Info</h2>
+        <div id="ticketInfoText">Paid event with multiple ticket categories. Materials provided on-site.</div>
+      </div>
+    </section>
+
+    <!-- Booking / RSVP Container (conditional) -->
+    <section class="booking-steps card" id="bookingContainer">
+      <div class="progress-bar"><div class="step-progress" id="progress"></div></div>
+
+      <!-- Step 1: Date & Time -->
+      <div class="step active" id="step1">
+        <h3 class="h3">Step 1: Select Date & Time</h3>
+        <div class="helper" id="venueInline"></div>
+        <div class="controls" id="dateOptions"></div>
+        <div class="controls" id="timeOptions"></div>
+        <div class="controls">
+          <button class="btn" id="step1Next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Ticketing (Paid only) OR RSVP (Free+RSVP) -->
+      <div class="step" id="step2">
+        <!-- Dynamic region -->
+        <div id="step2Content"></div>
+        <div class="controls">
+          <button class="btn secondary" id="step2Back">Back</button>
+          <button class="btn" id="step2Next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Review & Confirm (final) -->
+      <div class="step" id="step3">
+        <h3 class="h3">Step 3: Review & Confirm</h3>
+        <div class="notice" id="reviewBox">
+          <strong>E‑Ticket / Registration Info</strong>
+          <ul>
+            <li>Access tickets from “My Events” or your email.</li>
+            <li>Present QR at entry (no physical ticket required).</li>
+          </ul>
+          <div class="summary" id="reviewSummary"></div>
+        </div>
+        <div class="controls">
+          <button class="btn secondary" id="step3Back">Back</button>
+          <button class="btn" id="btnConfirm">Confirm</button>
+        </div>
+      </div>
+
+      <!-- Terms & Conditions Accordion -->
+      <div class="accordion" style="margin-top:10px">
+        <button id="btnTerms">Terms & Conditions ▾</button>
+        <div class="content" id="termsContent"></div>
+      </div>
+
+      <p class="policy" id="policyText">Cancellation & Refund: Only before 24 hours</p>
+    </section>
+
+    <!-- Hidden simple dialog to show after success -->
+    <section class="dialog card" id="successDialog" style="display:none">
+      <h3 class="h3" id="successTitle">Booking Confirmed</h3>
+      <p id="successText">Your confirmation email with QR ticket has been sent.</p>
+      <div class="helper">You can also find it in My Events.</div>
+    </section>
+  </main>
+
+  <script>
+  /* =============================================
+     CONFIG — this would typically come from backend
+     ============================================= */
+  const EVENT_CONFIG = {
+    id: 'evt_123',
+    title: 'Tech Conference 2025',
+    category: 'Tech',
+    mode: 'In-Person', // 'Online' | 'Hybrid' | 'In-Person'
+    locationCity: 'Nuwara Eliya',
+    venue: 'Grand Hall, Nuwara Eliya', // exact venue
+    dateOptions: ['Aug 21, 2025', 'Aug 22, 2025'],
+    timeOptions: ['10:00 AM', '02:00 PM'],
+    duration: '2 hrs',
+    ageLimit: '18+',
+    isFree: false,            // if true → no ticketing step
+    isRSVPRequired: false,    // if true AND isFree → RSVP flow
+    bookingFeePerTicket: 100, // LKR
+    // Ticket types for PAID events (EO-customizable; fallback to Gold/Silver/Bronze)
+    ticketTypes: [
+      { id:'gold', name:'Gold', price:5000, maxPerUser:5 },
+      { id:'silver', name:'Silver', price:3000, maxPerUser:5 },
+      // { id:'bronze', name:'Bronze', price:2000, maxPerUser:5 },
+    ],
+    // Custom form fields for RSVP (FREE + RSVP) — EO-designed
+    customFormFields: [
+      { id:'email', label:'Email', type:'email', required:true },
+      { id:'fullname', label:'Full Name', type:'text', required:true },
+      // Examples:
+      // { id:'company', label:'Company', type:'text', required:false },
+      // { id:'tshirt', label:'T‑Shirt Size', type:'select', options:['S','M','L','XL'], required:false },
+    ],
+    termsHtml: `<ul>
+      <li>Please carry a valid ID.</li>
+      <li>Outside food & beverages not allowed.</li>
+      <li>Re-entry not permitted.</li>
+    </ul>`,
+    refundPolicy: 'Cancellation & Refund: Only before 24 hours',
+  };
+
+  /* =============================================
+     BASIC RENDER
+     ============================================= */
+  const el = (sel) => document.querySelector(sel);
+  const els = (sel) => Array.from(document.querySelectorAll(sel));
+
+  // Header basics
+  el('#eventTitle').textContent = EVENT_CONFIG.title;
+  el('#tagCategory').textContent = EVENT_CONFIG.category;
+  el('#tagMode').textContent = EVENT_CONFIG.mode;
+  el('#tagTicket').textContent = EVENT_CONFIG.isFree ? (EVENT_CONFIG.isRSVPRequired ? 'Free • RSVP' : 'Free') : 'Paid';
+
+  // Meta list
+  const meta = [
+    { icon:'images/calendar.svg', text: EVENT_CONFIG.dateOptions[0] },
+    { icon:'images/clock.svg',    text: EVENT_CONFIG.timeOptions[0] },
+    { icon:'images/duration.svg', text: EVENT_CONFIG.duration },
+    { icon:'images/age.svg',      text: EVENT_CONFIG.ageLimit },
+    { icon:'images/location.svg', text: EVENT_CONFIG.venue }, // exact venue
+  ];
+  el('#metaList').innerHTML = meta.map(m=>`<li><img src="${m.icon}" alt=""/>${m.text}</li>`).join('');
+
+  // Venue inline helper
+  el('#venueInline').textContent = `Venue: ${EVENT_CONFIG.venue}`;
+
+  // Date + Time options (radio)
+  el('#dateOptions').innerHTML = EVENT_CONFIG.dateOptions.map((d,i)=>`
+    <label><input type="radio" name="date" value="${d}" ${i===0?'':' '} /> ${d}</label>
+  `).join('');
+  el('#timeOptions').innerHTML = EVENT_CONFIG.timeOptions.map((t,i)=>`
+    <label><input type="radio" name="time" value="${t}" ${i===0?'':' '} /> ${t}</label>
+  `).join('');
+
+  // Terms & Policy
+  el('#termsContent').innerHTML = EVENT_CONFIG.termsHtml || '<em>No terms provided.</em>';
+  el('#policyText').textContent = EVENT_CONFIG.refundPolicy;
+
+  // Ticket info text
+  el('#ticketInfoText').textContent = EVENT_CONFIG.isFree ? (EVENT_CONFIG.isRSVPRequired ? 'Free event — RSVP required.' : 'Free event — no booking required.') : 'Paid event — choose a ticket type.';
+
+  /* =============================================
+     FLOW STATE
+     ============================================= */
+  const steps = els('.step');
+  const progress = el('#progress');
+  let currentStep = 0;
+  let selection = { date:null, time:null, tickets:{}, rsvpData:{} };
+
+  function setProgress(){
+    const pct = ((currentStep) / (steps.length-1)) * 100;
+    progress.style.width = pct + '%';
+  }
+  function showStep(idx){
+    steps.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    currentStep = idx; setProgress();
+  }
+
+  // Step 1 → validate mandatory date & time
+  el('#step1Next').addEventListener('click', () => {
+    const date = document.querySelector('input[name="date"]:checked');
+    const time = document.querySelector('input[name="time"]:checked');
+    if(!date || !time){ alert('Please select a date and a time.'); return; }
+    selection.date = date.value; selection.time = time.value;
+    // Prepare Step 2 based on free/paid/RSVP
+    renderStep2();
+    showStep(1);
+  });
+
+  // Back/Next in Step 2
+  el('#step2Back').addEventListener('click', ()=> showStep(0));
+  el('#step2Next').addEventListener('click', ()=> {
+    if(EVENT_CONFIG.isFree && EVENT_CONFIG.isRSVPRequired){
+      // Validate RSVP form
+      const form = el('#rsvpForm');
+      const data = {};
+      let ok = true;
+      EVENT_CONFIG.customFormFields.forEach(f=>{
+        const input = form.querySelector(`[name="${f.id}"]`);
+        if(f.required && !input.value){ ok=false; input.style.borderColor = 'var(--danger)'; }
+        data[f.id] = input.value;
+      });
+      if(!ok){ alert('Please complete the required fields.'); return; }
+      selection.rsvpData = data;
+      renderReview('rsvp');
+      showStep(2);
+    } else if(!EVENT_CONFIG.isFree){
+      // Paid — must have at least one ticket
+      const totalQty = Object.values(selection.tickets).reduce((a,b)=>a+b,0);
+      if(totalQty === 0){ alert('Please select at least one ticket.'); return; }
+      renderReview('paid');
+      showStep(2);
+    }
+  });
+
+  // Step 3 actions
+  el('#step3Back').addEventListener('click', ()=> showStep(1));
+  el('#btnConfirm').addEventListener('click', async ()=>{
+    // NOTE: Replace with real API endpoints
+    const endpoint = (EVENT_CONFIG.isFree && EVENT_CONFIG.isRSVPRequired) ? '/api/rsvp' : '/api/bookings';
+    const payload = {
+      eventId: EVENT_CONFIG.id,
+      date: selection.date,
+      time: selection.time,
+      tickets: selection.tickets,
+      rsvpData: selection.rsvpData,
+    };
+    try {
+      // const res = await fetch(endpoint,{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+      // const json = await res.json();
+      // if(!json.success) throw new Error(json.message || 'Failed');
+      // Simulate success for now
+      el('#successTitle').textContent = EVENT_CONFIG.isFree ? 'RSVP Successful' : 'Booking Confirmed';
+      el('#successText').textContent = EVENT_CONFIG.isFree
+        ? 'A confirmation email has been sent to you. See you at the event!'
+        : 'Your e‑tickets with QR codes have been emailed to you.';
+      el('#successDialog').style.display = 'block';
+      window.scrollTo({ top: el('#successDialog').offsetTop - 20, behavior:'smooth' });
+    } catch(err){
+      alert('Something went wrong. Please try again.');
+    }
+  });
+
+  // Step 2 renderer
+  function renderStep2(){
+    const root = el('#step2Content');
+    if(EVENT_CONFIG.isFree){
+      if(EVENT_CONFIG.isRSVPRequired){
+        root.innerHTML = `
+          <h3 class="h3">RSVP Registration</h3>
+          <div class="summary" style="margin-bottom:10px">
+            <div><strong>Date:</strong> ${selection.date}</div>
+            <div><strong>Time:</strong> ${selection.time}</div>
+            <div><strong>Venue:</strong> ${EVENT_CONFIG.venue}</div>
+          </div>
+          <form id="rsvpForm" class="form"></form>
+        `;
+        const form = el('#rsvpForm');
+        EVENT_CONFIG.customFormFields.forEach(f=>{
+          if(f.type === 'select'){
+            form.insertAdjacentHTML('beforeend',`
+              <div class="field">
+                <label for="${f.id}">${f.label}${f.required?' *':''}</label>
+                <select id="${f.id}" name="${f.id}" ${f.required?'required':''}>
+                  ${(f.options||[]).map(opt=>`<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+              </div>
+            `);
+          } else if(f.type === 'textarea'){
+            form.insertAdjacentHTML('beforeend',`
+              <div class="field">
+                <label for="${f.id}">${f.label}${f.required?' *':''}</label>
+                <textarea id="${f.id}" name="${f.id}" rows="3" ${f.required?'required':''}></textarea>
+              </div>
+            `);
+          } else {
+            form.insertAdjacentHTML('beforeend',`
+              <div class="field">
+                <label for="${f.id}">${f.label}${f.required?' *':''}</label>
+                <input id="${f.id}" name="${f.id}" type="${f.type||'text'}" ${f.required?'required':''} />
+              </div>
+            `);
+          }
+        });
+      } else {
+        root.innerHTML = `
+          <div class="summary">
+            <div><strong>Date:</strong> ${selection.date}</div>
+            <div><strong>Time:</strong> ${selection.time}</div>
+            <div><strong>Venue:</strong> ${EVENT_CONFIG.venue}</div>
+          </div>
+          <p class="helper">This is a free event. No booking required.</p>
+        `;
+        // Hide Next button; convert to Finish
+        el('#step2Next').style.display = 'none';
+        el('#step3').style.display = 'none';
+      }
+    } else {
+      // Paid flow — show ticket grid with qty selectors and fee hint
+      const fee = EVENT_CONFIG.bookingFeePerTicket;
+      root.innerHTML = `
+        <div class="summary" style="margin-bottom:10px">
+          <div><strong>Date:</strong> ${selection.date}</div>
+          <div><strong>Time:</strong> ${selection.time}</div>
+          <div><strong>Venue:</strong> ${EVENT_CONFIG.venue}</div>
+        </div>
+        <h3 class="h3">Select Tickets</h3>
+        <div class="ticket-grid" id="ticketGrid"></div>
+        <div class="summary" style="margin-top:8px">
+          <div><strong>Booking fee:</strong> LKR ${fee} per ticket</div>
+          <div><strong>Subtotal:</strong> LKR <span id="subtotal">0</span></div>
+        </div>
+      `;
+      const grid = el('#ticketGrid');
+      grid.innerHTML = EVENT_CONFIG.ticketTypes.map(t => `
+        <div class="ticket-card" data-id="${t.id}" data-price="${t.price}" data-max="${t.maxPerUser||5}">
+          <div class="ticket-add">
+            <button class="btn ghost btnAdd">Add</button>
+          </div>
+          <div>
+            <div class="ticket-type">${t.name}</div>
+            <div class="ticket-price">LKR ${t.price.toLocaleString()}</div>
+          </div>
+          <div class="qty">
+            <button class="btnMinus" aria-label="decrease">−</button>
+            <span class="count">0</span>
+            <button class="btnPlus" aria-label="increase">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      // Attach handlers
+      grid.querySelectorAll('.ticket-card').forEach(card => {
+        const id = card.dataset.id;
+        selection.tickets[id] = 0;
+        const max = parseInt(card.dataset.max,10) || 5;
+        const price = parseInt(card.dataset.price,10);
+        const countEl = card.querySelector('.count');
+        const addBtn = card.querySelector('.btnAdd');
+        const plus = card.querySelector('.btnPlus');
+        const minus = card.querySelector('.btnMinus');
+
+        function setCount(n){ selection.tickets[id] = n; countEl.textContent = n; updateSubtotal(); }
+        addBtn.addEventListener('click', () => setCount(Math.min(1,max)) );
+        plus.addEventListener('click', () => setCount(Math.min((selection.tickets[id]||0)+1, max)) );
+        minus.addEventListener('click', () => setCount(Math.max((selection.tickets[id]||0)-1, 0)) );
+      });
+    }
+  }
+
+  function updateSubtotal(){
+    if(EVENT_CONFIG.isFree) return;
+    const fee = EVENT_CONFIG.bookingFeePerTicket;
+    let total = 0;
+    Object.entries(selection.tickets).forEach(([id,qty]) => {
+      const t = EVENT_CONFIG.ticketTypes.find(x=>x.id===id);
+      total += (t.price + fee) * (qty||0); // price + fee per ticket
+    });
+    const elSub = el('#subtotal');
+    if(elSub) elSub.textContent = total.toLocaleString();
+  }
+
+  function renderReview(kind){
+    const box = el('#reviewSummary');
+    box.innerHTML = '';
+    box.insertAdjacentHTML('beforeend', `<div><strong>Date:</strong> ${selection.date}</div>`);
+    box.insertAdjacentHTML('beforeend', `<div><strong>Time:</strong> ${selection.time}</div>`);
+    box.insertAdjacentHTML('beforeend', `<div><strong>Venue:</strong> ${EVENT_CONFIG.venue}</div>`);
+    if(kind==='paid'){
+      // ticket list and totals
+      const fee = EVENT_CONFIG.bookingFeePerTicket;
+      let total = 0; let lines = [];
+      Object.entries(selection.tickets).forEach(([id,qty])=>{
+        if(qty>0){
+          const t = EVENT_CONFIG.ticketTypes.find(x=>x.id===id);
+          const line = (t.price + fee) * qty;
+          total += line;
+          lines.push(`${t.name} × ${qty} — LKR ${(line).toLocaleString()}`);
+        }
+      });
+      if(lines.length===0) lines.push('<em>No tickets selected</em>');
+      box.insertAdjacentHTML('beforeend', `<div><strong>Tickets:</strong><br>${lines.join('<br>')}</div>`);
+      box.insertAdjacentHTML('beforeend', `<div><strong>Total:</strong> LKR ${total.toLocaleString()}</div>`);
+    } else {
+      // RSVP details
+      const fields = EVENT_CONFIG.customFormFields.map(f=>`<div>${f.label}: <strong>${selection.rsvpData[f.id]||'-'}</strong></div>`).join('');
+      box.insertAdjacentHTML('beforeend', fields);
+    }
+  }
+
+  // Terms accordion toggle
+  el('#btnTerms').addEventListener('click', ()=>{
+    const c = el('#termsContent');
+    const isOpen = c.style.display === 'block';
+    c.style.display = isOpen ? 'none' : 'block';
+    el('#btnTerms').textContent = isOpen ? 'Terms & Conditions ▾' : 'Terms & Conditions ▴';
+  });
+
+  // Share/Bookmark/Like — placeholder handlers
+  el('#btnShare').addEventListener('click', async ()=>{
+    try{ await navigator.share?.({ title: EVENT_CONFIG.title, text:'Check this event on Evento', url: location.href }); }
+    catch{ navigator.clipboard.writeText(location.href); alert('Link copied to clipboard'); }
+  });
+  el('#btnBookmark').addEventListener('click', ()=>{ alert('Added to your bookmarks (stub).'); /* integrate with backend */ });
+  el('#btnLike').addEventListener('click', ()=>{ alert('Thanks for liking! (stub)'); /* integrate with backend */ });
+
+  // Initialize
+  setProgress();
+
+  // Hide entire booking container if free & no RSVP
+  if(EVENT_CONFIG.isFree && !EVENT_CONFIG.isRSVPRequired){
+    el('#bookingContainer').style.display = 'none';
+  }
+  </script>
+
+  <script type="module">
+  import { apiGet, apiPost, requireLogin } from './js/api.js';
+
+  function qs(s){ return document.querySelector(s); }
+  const url = new URL(location.href);
+  const id = url.searchParams.get('id');
+  if(!id){
+    document.body.insertAdjacentHTML('afterbegin','<p style="padding:20px;color:red">Missing event id</p>');
+    throw new Error('missing id');
+  }
+
+  (async function(){
+    const data = await apiGet('/api/events/' + id);
+    if(!data.success){ alert(data.message || 'Failed'); return; }
+    const ev = data.data;
+
+    // Fill basics
+    qs('#eventTitle') && (qs('#eventTitle').textContent = ev.title);
+    qs('#flyerImg') && (qs('#flyerImg').src = ev.flyerUrl || 'images/placeholder.jpg');
+    qs('#aboutText') && (qs('#aboutText').textContent = ev.description || '');
+    qs('#organizerLink') && (qs('#organizerLink').textContent = ev.host?.name || 'Organizer');
+
+    // Replace the meta list with your icon list
+    const metaList = qs('#metaList');
+    if(metaList){
+      metaList.innerHTML = `
+        <li><img src="images/calendar.png" alt=""> ${new Date(ev.date).toLocaleDateString()}</li>
+        <li><img src="images/clock.png" alt=""> ${ev.time || ''}</li>
+        <li><img src="images/hourglass.png" alt=""> ${ev.duration ? ev.duration + ' hrs' : ''}</li>
+        <li><img src="images/age-group.png" alt=""> ${ev.requirements?.age || 'All ages'}</li>
+        <li><img src="images/translate.png" alt=""> ${(ev.requirements?.languages||[]).join(', ')}</li>
+        <li><img src="images/location.png" alt=""> ${ev.venue || ev.location || ''}</li>
+      `;
+    }
+
+    // Wire up booking button (or show login CTA)
+    const confirmBtn = qs('#btnConfirm');
+    if(confirmBtn){
+      confirmBtn.addEventListener('click', async () => {
+        const res = await apiPost('/api/bookings', { eventId: ev._id });
+        if(!res.success){
+          if((res.message||'').toLowerCase().includes('unauthorized')){
+            return requireLogin(location.href);
+          }
+          return alert(res.message || 'Failed to book');
+        }
+        alert('Booked! Check My Events');
+        location.href = 'dashboard.html#my-events';
+      });
+    }
+  })();
+</script>
+
 </body>
 </html>

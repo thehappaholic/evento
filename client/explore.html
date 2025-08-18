@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore | Evento</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Search Container ===== */
+    .search-container {
+      font-family: 'League Spartan', sans-serif;
+      background-color: #f0f8f0;
+      border-radius: 10px;
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+    }
+
+    .search-container input,
+    .search-container select {
+      flex: 1 1 180px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .search-container select {
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .search-container input {
+      min-width: 200px;
+    }
+
+    .search-container button {
+      background-color: #2faa4f;
+      color: #fff;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-shrink: 0;
+      min-width: 100px;
+      transition: background 0.2s ease;
+    }
+
+    .search-container button:hover {
+      background-color: #279344;
+    }
+
+    .search-container .icon {
+      font-size: 16px;
+    }
+
+    /* ===== Mobile Responsiveness ===== */
+    @media (max-width: 768px) {
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        gap: 12px;
+      }
+
+      .search-container input,
+      .search-container select,
+      .search-container button {
+        font-family: 'League Spartan', sans-serif;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  align-items: center;
+  flex: 1;              
+  min-width: 150px;
+      }
+    }
+
+    /* ===== Event Grid ===== */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 0 20px 80px;
+      margin-top: 20px;
+    }
+
+    .event-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .event-card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .event-card h3 {
+      margin: 8px 0;
+      font-size: 1.1rem;
+    }
+
+    .event-card .meta {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .event-card .desc {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .event-card .tags span {
+      display: inline-block;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #f0f0f0;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Search / Filter Section -->
+  <div class="search-container">
+    <input type="text" id="keywordInput" placeholder="Search by keyword..." />
+
+    <select id="locationSelect">
+      <option value="all">All Locations</option>
+      <option value="Colombo">Colombo</option>
+      <option value="Jaffna">Jaffna</option>
+      <option value="Anuradhapura">Anuradhapura</option>
+      <option value="Vavuniya">Vavuniya</option>
+    </select>
+
+    <select id="eventType">
+      <option value="all">All Event Types</option>
+      <option value="standup comedy">Stand-up Comedy</option>
+      <option value="seminar">Seminar</option>
+      <option value="workshop">Workshop</option>
+      <option value="webinar">Webinar</option>
+    </select>
+
+    <select id="eventMode">
+      <option value="all">All Modes</option>
+      <option value="in-person">In-person</option>
+      <option value="online">Online</option>
+      <option value="free">Free</option>
+      <option value="paid">Paid</option>
+    </select>
+
+    <button id="searchBtn">
+      <span class="icon">&#128269;</span> Search
+    </button>
+  </div>
+
+  <!-- Event Grid -->
+  <section class="event-grid" id="eventGrid">
+    <div class="event-card" data-location="Colombo" data-type="workshop" data-mode="in-person">
+      <img src="https://via.placeholder.com/300x160" alt="Event Image" />
+      <h3>AI & Design Workshop</h3>
+      <p class="meta">📍 Colombo | 🗓️ Sep 10</p>
+      <p class="desc">Learn the synergy of AI & UX design in this hands-on workshop.</p>
+      <div class="tags">
+        <span>Workshop</span>
+        <span>In-person</span>
+      </div>
+    </div>
+
+    <div class="event-card" data-location="Jaffna" data-type="seminar" data-mode="online">
+      <img src="https://via.placeholder.com/300x160" alt="Event Image" />
+      <h3>Startup Seminar</h3>
+      <p class="meta">📍 Jaffna | 🗓️ Sep 15</p>
+      <p class="desc">Learn how to launch and grow your startup successfully.</p>
+      <div class="tags">
+        <span>Seminar</span>
+        <span>Online</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ===== Filter/Search Logic =====
+    const searchBtn = document.getElementById('searchBtn');
+    const keywordInput = document.getElementById('keywordInput');
+    const locationSelect = document.getElementById('locationSelect');
+    const eventType = document.getElementById('eventType');
+    const eventMode = document.getElementById('eventMode');
+    const eventGrid = document.getElementById('eventGrid');
+
+    searchBtn.addEventListener('click', () => {
+      const keyword = keywordInput.value.toLowerCase();
+      const location = locationSelect.value;
+      const type = eventType.value;
+      const mode = eventMode.value;
+
+      const cards = eventGrid.querySelectorAll('.event-card');
+      cards.forEach(card => {
+        const cardLocation = card.dataset.location;
+        const cardType = card.dataset.type;
+        const cardMode = card.dataset.mode;
+        const cardText = card.textContent.toLowerCase();
+
+        const matchesKeyword = keyword === '' || cardText.includes(keyword);
+        const matchesLocation = location === 'all' || cardLocation === location;
+        const matchesType = type === 'all' || cardType === type;
+        const matchesMode = mode === 'all' || cardMode === mode;
+
+        if (matchesKeyword && matchesLocation && matchesType && matchesMode) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

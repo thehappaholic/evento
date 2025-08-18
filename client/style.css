@@ -12,43 +12,40 @@ body {
   line-height: 1.6;
 }
 
-/* Header */
 .header {
   display: flex;
-  align-items: center;
+  align-items: center;   /* vertical align */
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 2rem;
+  gap: 0.5rem;
+  padding: 1rem;
   background: #e1f8cd;
   border-bottom: 1px solid #d0eac0;
 }
 
 .logo img {
-  height: 30px; /* match the height of the login button */
+  height: 38px;   /* match button height */
   width: auto;
-  vertical-align: middle; /* keep aspect ratio */
 }
 
 .search {
-  flex: 1 1 auto;
-  padding: 0.5rem 1rem;
+  flex: 1;
+  height: 32px;   /* force same height */
+  padding: 0 2.2rem 0 0.8rem;  /* adjust padding to keep input compact */
   border: 1px solid #cceacc;
   border-radius: 6px;
-  background: url("images/search.png") no-repeat 8px center;
-  background-size: 20px;
-  min-width: 100px;
+  background: url("images/search.png") no-repeat right 8px center;
+  background-size: 16px;
+  min-width: 50px;
   max-width: 250px;
   box-sizing: border-box;
 }
-
 
 .login-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 35px;
-  flex-shrink: 0;
-  padding: 0.5rem 1.2rem;
+  height: 35px;  /* same as logo + search */
+  padding: 1rem 1rem 1rem 1rem;  /* smaller padding for balance */
   background: #149631;
   color: #fff;
   border-radius: 25px;
@@ -56,7 +53,9 @@ body {
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
+  font-size: 0.9rem;
 }
+
 
 .search-container {
   font-family: 'League Spartan', sans-serif;
@@ -1000,3 +999,197 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Sidebar (Desktop) ===== */
+.sidebar {
+  width: 80px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-logo {
+  width: 50px;
+  margin-bottom: 30px;
+}
+
+.sidebar .nav-icons a {
+  display: block;
+  margin: 15px 0;
+}
+
+.sidebar .nav-icons img {
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.sidebar .nav-icons a:hover img {
+  opacity: 1;
+}
+
+/* ===== Main Dashboard Layout ===== */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Topbar */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.profile-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+/* Welcome Section */
+.welcome h1 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* Event Cards */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.event-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  padding: 15px;
+}
+
+.event-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.event-card h3 {
+  margin: 8px 0;
+}
+
+.event-card .meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.event-card .desc {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.event-card .tags span {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #f0f0f0;
+  margin-right: 5px;
+}
+
+/* ===== Bottom Navigation (Mobile) ===== */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: #fff;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.bottom-nav a {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+}
+
+.bottom-nav img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.bottom-nav a:hover img,
+.bottom-nav a.active img {
+  opacity: 1;
+}
+
+/* Highlight Create Button */
+.bottom-nav .create-btn img {
+  width: 42px;
+  height: 42px;
+}
+
+/* ===== Responsive Switch ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .bottom-nav {
+    display: flex;
+  }
+
+  .dashboard-wrapper {
+    flex-direction: column;
+  }
+
+  .dashboard {
+    padding-bottom: 80px; /* space so content not hidden behind bottom nav */
+  }
+}
+
